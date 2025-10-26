@@ -29,6 +29,7 @@ ENV VERSION="3.2.11_ubuntu_22.04_x86_64_py3.10" \
 USER root
 WORKDIR /app
 
+COPY acestream_${VERSION}.tar.gz .
 # hadolint ignore=DL4006,DL3008,DL3013
 RUN \
     apt-get update \
@@ -44,8 +45,8 @@ RUN \
     && useradd --uid 1000 --gid 1000 -m appuser \
     && mkdir -p /app \
     && mkdir -p /.cache \
-    && curl -fsSL "https://download.acestream.media/linux/acestream_${VERSION}.tar.gz" \
-        | tar xzf - -C /app \
+    && tar xzf acestream_${VERSION}.tar.gz \
+    && rm acestream_${VERSION}.tar.gz \
     && pip install uv \
     && uv pip install --requirement /app/requirements.txt \
     && chown -R appuser:appuser /.cache /app && chmod -R 755 /app \
@@ -55,7 +56,7 @@ RUN \
     && apt-get clean \
     && rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/
 
-COPY . /
+COPY entrypoint.sh /
 
 USER appuser
 
