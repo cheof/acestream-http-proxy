@@ -7,6 +7,6 @@ fi
 
 exec \
 	/app/start-engine \
-	--client-console \
+	--client-gtk \
 	"$EXTRA_FLAGS" \
 	"$@"
