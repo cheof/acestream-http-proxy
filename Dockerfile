@@ -37,6 +37,8 @@ COPY acestream_${VERSION}.tar.gz .
 RUN \
     apt-get update \
     && \
+    apt-get upgrade -y \
+    && \
     apt-get install --no-install-recommends --no-install-suggests -y \
         bash \
         ca-certificates \
